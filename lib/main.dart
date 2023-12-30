@@ -85,13 +85,15 @@ class MyHomePage extends StatelessWidget {
           Expanded(
               child: AnimatedBuilder(
                   animation: controller,
-                  builder: (context, child) => const [
-                        ProjectsView(),
-                        LearnView(),
-                        ToolsView(),
-                        LogsView(),
-                        SettingsView()
-                      ][controller.selectedIndex]))
+                  builder: (context, child) =>
+                      switch (controller.selectedIndex) {
+                        0 => const ProjectsView(),
+                        1 => const LearnView(),
+                        2 => const ToolsView(),
+                        3 => const LogsView(),
+                        4 => const SettingsView(),
+                        int() => const SizedBox()
+                      }))
         ],
       ),
     );
