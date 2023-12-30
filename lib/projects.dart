@@ -94,7 +94,22 @@ class _ProjectsViewState extends State<ProjectsView> {
           : FilledButton(child: const Text("Open Project"), onPressed: () {})),
       DataCell(OutlinedButton(
           child: const Text("Manage Project"), onPressed: () {})),
-      DataCell(IconButton(icon: const Icon(Icons.more_horiz), onPressed: () {}))
+      DataCell(MenuAnchor(
+        builder: (context, controller, child) => IconButton(
+            icon: const Icon(Icons.more_horiz),
+            onPressed: () =>
+                controller.isOpen ? controller.close() : controller.open()),
+        menuChildren: [
+          MenuItemButton(
+              child: const Text("Open Project Folder"), onPressed: () {}),
+          MenuItemButton(child: const Text("Create Backup"), onPressed: () {}),
+          MenuItemButton(
+            style: MenuItemButton.styleFrom(backgroundColor: Colors.red),
+            child: const Text("Remove Project"),
+            onPressed: () {},
+          ),
+        ],
+      ))
     ]);
   }
 }
