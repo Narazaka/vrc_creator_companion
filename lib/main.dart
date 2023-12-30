@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
+import 'package:vrc_creator_companion/learn.dart';
+import 'package:vrc_creator_companion/logs.dart';
 import 'package:vrc_creator_companion/projects.dart';
+import 'package:vrc_creator_companion/settings.dart';
+import 'package:vrc_creator_companion/tools.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,34 +37,19 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(
+          controller: SidebarXController(
+        selectedIndex: 0,
+        extended: true,
+      )),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key, required this.controller});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  SidebarXController controller = SidebarXController(
-    selectedIndex: 0,
-    extended: true,
-  );
+  final SidebarXController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +82,16 @@ class _MyHomePageState extends State<MyHomePage> {
             extendedTheme:
                 const SidebarXTheme(width: 150, margin: EdgeInsets.all(10)),
           ),
-          Expanded(child: const [ProjectsView()][0])
+          Expanded(
+              child: AnimatedBuilder(
+                  animation: controller,
+                  builder: (context, child) => const [
+                        ProjectsView(),
+                        LearnView(),
+                        ToolsView(),
+                        LogsView(),
+                        SettingsView()
+                      ][controller.selectedIndex]))
         ],
       ),
     );
