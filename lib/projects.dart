@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:open_dir/open_dir.dart';
+
+final openDir = OpenDir();
 
 class ProjectsView extends StatefulWidget {
   const ProjectsView({super.key});
@@ -101,7 +104,10 @@ class _ProjectsViewState extends State<ProjectsView> {
                 controller.isOpen ? controller.close() : controller.open()),
         menuChildren: [
           MenuItemButton(
-              child: const Text("Open Project Folder"), onPressed: () {}),
+              child: const Text("Open Project Folder"),
+              onPressed: () {
+                openDir.openNativeDir(path: path);
+              }),
           MenuItemButton(child: const Text("Create Backup"), onPressed: () {}),
           MenuItemButton(
             style: MenuItemButton.styleFrom(backgroundColor: Colors.red),
